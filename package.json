@@ -1,0 +1,24 @@
+{
+  "name": "sampleplaywright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "testcase1": "npx playwright test tests/testsuites/Testcase1.spec.ts --project=chromium",
+    "test2": "npx playwright test tests/testsuites/dummy.spec.ts --project=chromium"
+  },
+  "keywords": [
+    "playwright-test",
+    "playwright"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.48.2",
+    "@types/node": "^22.8.2"
+  },
+  "dependencies": {
+    "mailslurp-client": "^15.20.2",
+    "sampleplaywright": "file:"
+  }
+}

@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "esModuleInterop": true,                             
+      "resolveJsonModule": true,                          
+      "baseUrl": ".",                                    
+      "paths": {                                           
+        "@pages/*":["tests/pageobjects/*"],
+        "@pageobjects/*":["tests/pageobjectlocators/*"],
+        "@lib/*":["tests/lib/*"],
+        "@util/*":["tests/util/*"],
+        "@datatypes/*":["tests/types/*"], 
+        "@root/*": ["./*"],
+        "@playwright/*": ["playwright/test/*"]
+      }                                         
+    }
+}
