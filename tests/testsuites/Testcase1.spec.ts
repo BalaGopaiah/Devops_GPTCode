@@ -8,22 +8,26 @@ const screenshotpath = `./tests/screenshots/${day}${time}.png`;
 
 // Navigate and validate the Integrations module for Cloud Providers, Version Control, and Container Registry sub-modules
 test.describe('Navigate and validate the Integrations module for Cloud Providers, Version Control, and Container Registry sub-modules', async () => {
-  
+
   test('Navigate and validate the Integrations module for Cloud Providers, Version Control, and Container Registry sub-modules', async ({ page }) => {
 
-          // Navigate to the given applicaton Url
-          await NavigateURL(page);
-          
-          // Validate Login credentials with valid email and password.
-          await loginDashboard(page);
-          
-          await sidebar(page);
-          
-          await clickOnIntegrationAndCloudProvidersBtn(page);
+    // Navigate to the given applicaton Url
+    await NavigateURL(page);
 
-          await clickOnVersionControlBtn(page);
+    // Validate Login credentials with valid email and password.
+    await loginDashboard(page);
 
-          await clickOnContainerRegistryBtn(page);
+    await sidebar(page);
+
+    await clickOnIntegrationAndCloudProvidersBtn(page);
+
+    await clickOnVersionControlBtn(page);
+
+    await clickOnContainerRegistryBtn(page);
+
+    await clickOnCIAndCDBtn(page);
+
+    await clickOnObservabilityBtn(page);
 
   })
 
@@ -39,7 +43,7 @@ async function NavigateURL(page: Page) {
   // Zoom out to 75%
   await changeZoom(page, '80%');
   await page.waitForTimeout(2000);
-  await page.screenshot({ path: screenshotpath, fullPage: true});
+  await page.screenshot({ path: screenshotpath, fullPage: true });
   await page.waitForTimeout(3000);
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle('DevOps_GPT');
@@ -80,6 +84,10 @@ async function loginDashboard(page: Page) {
   await page.click("button:has(span:text('Continue'))");
   await page.waitForTimeout(2000);
 
+  // Zoom out to 75%
+  await changeZoom(page, '75%');
+  await page.waitForTimeout(2000);
+
   await page.locator("input[id='input_field_p_password_password']").fill("pass1234S$&*()");
   await page.screenshot({ path: screenshotpath, fullPage: true });
   await page.waitForTimeout(2000);
@@ -104,6 +112,7 @@ async function sidebar(page: Page) {
   await page.locator("button[class='text-gray-400 hover:text-white'] svg[class='lucide lucide-panel-right-close absolute left-[3.2rem]']").click();
   await page.waitForTimeout(2000);
   await page.screenshot({ path: screenshotpath, fullPage: true });
+
 }
 
 /**
@@ -125,6 +134,8 @@ async function clickOnIntegrationAndCloudProvidersBtn(page: Page) {
   await clickOnAzureButton(page);
   await page.waitForTimeout(3000);
 
+  await clickOnDeleteButton(page);
+  await page.waitForTimeout(2000);
 }
 
 /**
@@ -138,11 +149,11 @@ async function clickOnAWSButton(page: Page) {
   await page.waitForTimeout(2000);
   await page.locator("input[id='secretName']").fill('Secret1');
   await page.waitForTimeout(2000);
-  await page.locator("input[id='accessKeyId']").fill('Key1');  
+  await page.locator("input[id='accessKeyId']").fill('Key1');
   await page.waitForTimeout(2000);
-  await page.locator("input[id='secretAccessKey']").fill('SecretAccess1'); 
-  await page.waitForTimeout(2000); 
-  await page.locator("input[id='region']").fill('Region1');  
+  await page.locator("input[id='secretAccessKey']").fill('SecretAccess1');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='region']").fill('Region1');
   await page.waitForTimeout(2000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
@@ -159,10 +170,10 @@ async function clickOnGCPButton(page: Page) {
   await page.waitForTimeout(2000);
   await page.locator("input[id='secretName']").fill('Secret2');
   await page.waitForTimeout(2000);
-  await page.locator("input[id='projectId']").fill('ProjectId1');  
+  await page.locator("input[id='projectId']").fill('ProjectId1');
   await page.waitForTimeout(2000);
-  await page.locator("input[id='serviceAccountKey']").fill('ServiceAccount1'); 
-  await page.waitForTimeout(2000); 
+  await page.locator("input[id='serviceAccountKey']").fill('ServiceAccount1');
+  await page.waitForTimeout(2000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
 }
@@ -178,14 +189,58 @@ async function clickOnAzureButton(page: Page) {
   await page.waitForTimeout(2000);
   await page.locator("input[id='secretName']").fill('Secret3');
   await page.waitForTimeout(1000);
-  await page.locator("input[id='TenantId']").fill('Tenant1');  
+  await page.locator("input[id='TenantId']").fill('Tenant1');
   await page.waitForTimeout(1000);
-  await page.locator("input[id='clientID']").fill('ClientId1'); 
-  await page.waitForTimeout(1000); 
-  await page.locator("input[id='clientSecret']").fill('ClientSecret1');  
+  await page.locator("input[id='clientID']").fill('ClientId1');
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='clientSecret']").fill('ClientSecret1');
   await page.waitForTimeout(2000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
+}
+
+/**
+ * Function is used to click on all delete buttons for each secret type.
+ * @param page Interface page
+ */
+async function clickOnDeleteButton(page: Page) {
+  // Keep deleting until no delete buttons are left
+  while (true) {
+    const delebtn = page.locator('div[class="flex gap-1"] button:nth-child(2)');
+    const delelength = await delebtn.count();
+    console.log("Current delete button count: " + delelength);
+
+    // Break the loop if no delete buttons are found
+    if (delelength === 0) {
+      console.log("No more delete buttons remaining.");
+      break;
+    }
+
+    // Click on the first available delete button
+    try {
+      const button = delebtn.first();
+
+      // Ensure the button is visible and enabled before clicking
+      if (await button.isVisible() && await button.isEnabled()) {
+        console.log("Clicking delete button...");
+        await button.click();
+
+        // Wait for the button to be removed from the DOM
+        await page.waitForTimeout(1000);
+      } else {
+        console.log("Button is not clickable, exiting loop.");
+        break;
+      }
+    } catch (error) {
+      console.error("Error clicking delete button:", error);
+      break;
+    }
+
+    // Short pause to allow the DOM to update
+    await page.waitForTimeout(500);
+  }
+
+  console.log("All delete buttons have been processed.");
 }
 
 /**
@@ -204,8 +259,11 @@ async function clickOnVersionControlBtn(page: Page) {
   await clickOnGitLabButton(page);
   await clickOnBitbucketButton(page);
   await page.waitForTimeout(3000);
-  
-  await page.close();
+
+  await clickOnDeleteButton(page);
+  await page.waitForTimeout(2000);
+
+
 }
 
 /**
@@ -226,7 +284,7 @@ async function clickOnGitHubButton(page: Page) {
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
 
-} 
+}
 
 /**
  * Function is used to click and Validate the GitLab Integration with valid credentials
@@ -246,7 +304,7 @@ async function clickOnGitLabButton(page: Page) {
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
 
-} 
+}
 
 /**
  * Function is used to click and Validate the Bitbucket Integration with valid credentials
@@ -266,23 +324,27 @@ async function clickOnBitbucketButton(page: Page) {
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
 
-} 
+}
 
 /**
  * Function is used to Validate the Container Registry fields with valid credentials
  * @param page Interface page
  */
 async function clickOnContainerRegistryBtn(page: Page) {
-  await page.click("button:text('Container Registry')");
-  // await page.getByRole('tab', { name: 'Container Registry' } ).click();
-  // await page.locator('button[id="radix-:r4:-trigger-Container Registry"]').click();
+  // Zoom out to 75%
+  await changeZoom(page, '75%');
+  await page.waitForTimeout(2000);
+  await page.click('button:text("Container Registry")');
   await page.waitForTimeout(2000);
 
-  await clickOnGoogleContainerRegistryButton(page);
+  //await clickOnGoogleContainerRegistryButton(page);
   await clickOnAmazonECRButton(page);
   await clickOnDockerHubButton(page);
-  await page.screenshot({ path: screenshotpath, fullPage: true });
+  await clickOnGithubContainerRegistryButton(page);
   await page.waitForTimeout(3000);
+
+  await clickOnDeleteButton(page);
+  await page.waitForTimeout(2000);
 
 }
 
@@ -302,7 +364,7 @@ async function clickOnGoogleContainerRegistryButton(page: Page) {
   await page.locator("input[id='url']").fill('https://google.com');
   await page.waitForTimeout(2000);
   await page.click("button:text('Add Secret')");
-  await page.waitForTimeout(3000);
+  await page.waitForTimeout(2000);
 }
 
 /**
@@ -323,7 +385,7 @@ async function clickOnAmazonECRButton(page: Page) {
   await page.locator("input[id='secretAccessKey']").fill('SecretAccessKey1');
   await page.waitForTimeout(2000);
   await page.click("button:text('Add Secret')");
-  await page.waitForTimeout(3000);
+  await page.waitForTimeout(2000);
 }
 
 /**
@@ -344,7 +406,218 @@ async function clickOnDockerHubButton(page: Page) {
   await page.locator("input[id='password']").fill('Password1');
   await page.waitForTimeout(2000);
   await page.click("button:text('Add Secret')");
-  await page.waitForTimeout(3000);
+  await page.waitForTimeout(2000);
 }
 
+/**
+ * Function is used to click and Validate the GitHub container registry Integration with valid credentials
+ * @param page Interface page
+ */
+async function clickOnGithubContainerRegistryButton(page: Page) {
+  await page.click("button:has(span:text('Select secret type'))");
+  await page.waitForTimeout(3000);
+  await page.getByRole('option', { name: 'GitHub Container Registry' }).click();
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='secretName']").fill('Secret17');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='registry_url']").fill('https://google.com');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='userName']").fill('Username4');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='password']").fill('Password6');
+  await page.waitForTimeout(2000);
+  await page.click("button:text('Add Secret')");
+  await page.waitForTimeout(2000);
+}
 
+/**
+ * Function is used to Validate the CI/CD fields with valid credentials
+ * @param page Interface page
+ */
+async function clickOnCIAndCDBtn(page: Page) {
+  // Zoom out to 75%
+  await changeZoom(page, '75%');
+  await page.waitForTimeout(2000);
+  await page.click("button:text('CI/CD')");
+  await page.screenshot({ path: screenshotpath, fullPage: true });
+  await page.waitForTimeout(2000);
+
+  await clickOnArgoCDButton(page);
+  await clickOnJenkinsButton(page);
+  await clickOnCircleCIButton(page);
+  await page.waitForTimeout(3000);
+
+  await clickOnDeleteButton(page);
+  await page.waitForTimeout(2000);
+
+}
+
+/**
+ * Function is used to click and Validate the ArgoCD Integration with valid credentials
+ * @param page Interface page
+ */
+async function clickOnArgoCDButton(page: Page) {
+  await page.click("button:has(span:text('Select secret type'))");
+  await page.waitForTimeout(3000);
+  await page.getByRole('option', { name: 'ArgoCD' }).click();
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='secretName']").fill('Secret10');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='endpointURL']").fill('https://www.google.com');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='userName']").fill('Username4');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='password']").fill('Password3');
+  await page.waitForTimeout(2000);
+  await page.click("button:text('Add Secret')");
+  await page.waitForTimeout(2000);
+}
+
+/**
+ * Function is used to click and Validate the Jenkins Integration with valid credentials
+ * @param page Interface page
+ */
+async function clickOnJenkinsButton(page: Page) {
+  await page.click("button:has(span:text('Select secret type'))");
+  await page.waitForTimeout(3000);
+  await page.getByRole('option', { name: 'Jenkins' }).click();
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='secretName']").fill('Secret11');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='endpointURL']").fill('https://www.google.com');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='userName']").fill('Username5');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='password']").fill('Password5');
+  await page.waitForTimeout(2000);
+  await page.click("button:text('Add Secret')");
+  await page.waitForTimeout(2000);
+}
+
+/**
+ * Function is used to click and Validate the CircleCI Integration with valid credentials
+ * @param page Interface page
+ */
+async function clickOnCircleCIButton(page: Page) {
+  await page.click("button:has(span:text('Select secret type'))");
+  await page.waitForTimeout(3000);
+  await page.getByRole('option', { name: 'CircleCI' }).click();
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='secretName']").fill('Secret12');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='endpointURL']").fill('https://www.google.com');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='userName']").fill('Username6');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='password']").fill('Password6');
+  await page.waitForTimeout(2000);
+  await page.click("button:text('Add Secret')");
+  await page.waitForTimeout(2000);
+}
+
+/**
+ * Function is used to Validate the Observability fields with valid credentials
+ * @param page Interface page
+ */
+async function clickOnObservabilityBtn(page: Page) {
+  // Zoom out to 75%
+  await changeZoom(page, '75%');
+  await page.waitForTimeout(2000);
+  await page.click("button:text('Observability')");
+  await page.screenshot({ path: screenshotpath, fullPage: true });
+  await page.waitForTimeout(2000);
+
+  await clickOnGrafanaButton(page);
+  await clickOnLokiButton(page);
+  await clickOnMimirButton(page);
+  await clickOnTempoButton(page);
+  await page.waitForTimeout(3000);
+
+  await clickOnDeleteButton(page);
+  await page.waitForTimeout(2000);
+
+}
+
+/**
+ * Function is used to click and Validate the Grafana Integration with valid credentials
+ * @param page Interface page
+ */
+async function clickOnGrafanaButton(page: Page) {
+  await page.click("button:has(span:text('Select secret type'))");
+  await page.waitForTimeout(3000);
+  await page.getByRole('option', { name: 'Grafana' }).click();
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='secretName']").fill('Secret13');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='endpointURL']").fill('https://www.google.com');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='userName']").fill('Username7');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='password']").fill('Password7');
+  await page.waitForTimeout(2000);
+  await page.click("button:text('Add Secret')");
+  await page.waitForTimeout(2000);
+}
+
+/**
+ * Function is used to click and Validate the Loki Integration with valid credentials
+ * @param page Interface page
+ */
+async function clickOnLokiButton(page: Page) {
+  await page.click("button:has(span:text('Select secret type'))");
+  await page.waitForTimeout(3000);
+  await page.getByRole('option', { name: 'Loki' }).click();
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='secretName']").fill('Secret14');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='endpointURL']").fill('https://www.google.com');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='userName']").fill('Username8');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='password']").fill('Password7');
+  await page.waitForTimeout(2000);
+  await page.click("button:text('Add Secret')");
+  await page.waitForTimeout(2000);
+}
+
+/**
+ * Function is used to click and Validate the Mimir Integration with valid credentials
+ * @param page Interface page
+ */
+async function clickOnMimirButton(page: Page) {
+  await page.click("button:has(span:text('Select secret type'))");
+  await page.waitForTimeout(3000);
+  await page.getByRole('option', { name: 'Mimir' }).click();
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='secretName']").fill('Secret15');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='endpointURL']").fill('https://www.google.com');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='userName']").fill('Username9');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='password']").fill('Password8');
+  await page.waitForTimeout(2000);
+  await page.click("button:text('Add Secret')");
+  await page.waitForTimeout(2000);
+}
+
+/**
+ * Function is used to click and Validate the Tempo Integration with valid credentials
+ * @param page Interface page
+ */
+async function clickOnTempoButton(page: Page) {
+  await page.click("button:has(span:text('Select secret type'))");
+  await page.waitForTimeout(3000);
+  await page.getByRole('option', { name: 'Tempo' }).click();
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='secretName']").fill('Secret16');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='endpointURL']").fill('https://www.google.com');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='userName']").fill('Username10');
+  await page.waitForTimeout(2000);
+  await page.locator("input[id='password']").fill('Password7');
+  await page.waitForTimeout(2000);
+  await page.click("button:text('Add Secret')");
+  await page.waitForTimeout(2000);
+}

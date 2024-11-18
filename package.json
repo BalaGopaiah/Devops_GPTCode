@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "codegen": "npx playwright codegen https://devopsgpt.ezy.dev/",
     "testcase1": "npx playwright test tests/testsuites/Testcase1.spec.ts --project=chromium",
     "test2": "npx playwright test tests/testsuites/dummy.spec.ts --project=chromium"
   },

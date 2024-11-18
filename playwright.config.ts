@@ -14,7 +14,7 @@ import { defineConfig, devices, PlaywrightTestConfig } from '@playwright/test';
 const config : PlaywrightTestConfig = {
   testDir: './tests',
   /* Set test timeout  */
-  timeout: 60 * 3000,
+  timeout: 60 * 5000,
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
