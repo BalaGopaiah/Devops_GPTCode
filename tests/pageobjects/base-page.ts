@@ -1,11 +1,9 @@
 import { Browser, expect, Locator, Page, TestInfo } from '@playwright/test';
-import { WebActions } from '@util/webactions';
-import { Helper } from '@util/helper';
-
+import { WebActions } from '../util/webactions';
 
 export class BasePage {
 
-readonly page: Page;
+    readonly page: Page;
     readonly baseUrl: string;
     readonly webactions: WebActions;
 
@@ -17,7 +15,7 @@ readonly page: Page;
         this.webactions = new WebActions(page);
     }
 
-  //GetFileNames
+    //GetFileNames
     public getFilenameFromPath(fullFilePath: string) {
         return ((fullFilePath.replace(/^.*[\\\/]/, '')).valueOf().toString());
     }

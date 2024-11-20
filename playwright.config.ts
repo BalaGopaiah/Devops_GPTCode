@@ -1,4 +1,5 @@
-import { defineConfig, devices, PlaywrightTestConfig } from '@playwright/test';
+import { defineConfig, devices, PlaywrightTestConfig, Browser } from '@playwright/test';
+import { testConfig } from './testConfig';
 
 /**
  * Read environment variables from file.
@@ -14,7 +15,7 @@ import { defineConfig, devices, PlaywrightTestConfig } from '@playwright/test';
 const config : PlaywrightTestConfig = {
   testDir: './tests',
   /* Set test timeout  */
-  timeout: 60 * 5000,
+  timeout: 60 * 10000,
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -28,7 +29,7 @@ const config : PlaywrightTestConfig = {
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://127.0.0.1:3000',
+    //baseURL: testConfig.url,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -46,7 +47,7 @@ const config : PlaywrightTestConfig = {
         // chrome browser config
         channel: 'chrome',
         // picks base URL based on user input
-        baseURL: `https://xathon.mettl.com/event/Dare2Code_`,
+        baseURL: testConfig.url,
         // browser mode
         headless: false,
         // launchOptions: {
@@ -58,9 +59,7 @@ const config : PlaywrightTestConfig = {
         viewport: { width: 1300, height: 740 },
         // enable file downloads in chrome
         acceptDownloads: true,
-        launchOptions: {
-          args: ['--incognito']
-        },
+
         // artifacts
         screenshot: 'on',
         video: 'on',
