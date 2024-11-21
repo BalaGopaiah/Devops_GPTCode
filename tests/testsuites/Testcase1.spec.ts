@@ -1,11 +1,31 @@
-import { expect, Page, TestInfo } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 import { testConfig } from '../../testConfig';
 import test from '../lib/BaseTest';
+import { createAmzonECR, createArgoCD, createAWS, createAzure, createBitbucket, createCircleCI, createDockerHub, createGCP, createGithub, createGithubContainerRegistry, createGitlab, createGoogleContainerRegistry, createGrafana, createJenkins, createLoki, createMimir, createTempo } from '../util/mockdata.factory';
+import { CreationOfAmazonECR, CreationOfArgoCD, CreationOfAWS, CreationOfAzure, CreationOfBitbucket, CreationOfCircleCI, CreationOfDockerHub, CreationOfGCP, CreationOfGilab, CreationOfGithub, CreationOfGithubContainerRegistry, CreationOfGoogleContainerRegistry, CreationOfGrafana, CreationOfJenkins, CreationOfLoki, CreationOfMimir, CreationOfTempo } from '../types/devopsgpt.type';
 
 const date = new Date();
 const day = `${date.getDate()}`.padStart(2, '0');
 const time = `${date.getMinutes()}`.padStart(2, '0') + `${date.getSeconds()}`.padStart(2, '0');
 const screenshotpath = `./tests/screenshots/${day}${time}.png`;
+
+const awsData: CreationOfAWS = createAWS({}); 
+const gcpData: CreationOfGCP = createGCP({}); 
+const azureData: CreationOfAzure = createAzure({});
+const githubData: CreationOfGithub = createGithub({});
+const gitlabData: CreationOfGilab = createGitlab({});
+const bitbucketbData: CreationOfBitbucket = createBitbucket({});
+const googlecontainerRegistryData: CreationOfGoogleContainerRegistry = createGoogleContainerRegistry({});
+const amazonECRData: CreationOfAmazonECR = createAmzonECR({});
+const dockerHubData: CreationOfDockerHub = createDockerHub({});
+const githubContainerRegistryData: CreationOfGithubContainerRegistry = createGithubContainerRegistry({});
+const argoCDData: CreationOfArgoCD = createArgoCD({});
+const jenkinsData: CreationOfJenkins = createJenkins({});
+const circleCIData: CreationOfCircleCI = createCircleCI({});
+const grafanaData: CreationOfGrafana = createGrafana({});
+const lokiData: CreationOfLoki = createLoki({});
+const mimirData: CreationOfMimir = createMimir({});
+const tempoData: CreationOfTempo = createTempo({});
 
 // Navigate and validate the Integrations module for Cloud Providers, Version Control, and Container Registry sub-modules
 test.describe('Navigate and validate the Integrations module for Cloud Providers, Version Control, and Container Registry sub-modules', async () => {
@@ -49,12 +69,12 @@ async function NavigateURL(page: Page) {
   await page.goto(testConfig.url);
 
   // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle('DevOps_GPT');
+  await expect(page).toHaveTitle(awsData.title);
   // const titletext = await page.title();
   // if (titletext == 'DevOps_GPT') {
   //   console.log("Page Title : " + titletext);
   // } else {
-    
+  //   console.error();
   // }
 
 }
@@ -142,15 +162,15 @@ async function clickOnIntegrationAndCloudProvidersBtn(page: Page) {
 async function clickOnAWSButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(3000);
-  await page.getByRole('option', { name: 'AWS' }).click();
+  await page.getByRole('option', { name: awsData.aws }).click();
   await page.waitForTimeout(2000);
-  await page.locator("input[id='secretName']").fill('Secret1');
+  await page.locator("input[id='secretName']").fill(awsData.awssecretname);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='accessKeyId']").fill('Key1');
+  await page.locator("input[id='accessKeyId']").fill(awsData.awsaccesskeyId);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='secretAccessKey']").fill('SecretAccess1');
+  await page.locator("input[id='secretAccessKey']").fill(awsData.awssecretaccessKey);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='region']").fill('Region1');
+  await page.locator("input[id='region']").fill(awsData.awsregion);
   await page.waitForTimeout(2000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
@@ -163,13 +183,13 @@ async function clickOnAWSButton(page: Page) {
 async function clickOnGCPButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(3000);
-  await page.getByRole('option', { name: 'GCP' }).click();
+  await page.getByRole('option', { name: gcpData.gcp }).click();
   await page.waitForTimeout(2000);
-  await page.locator("input[id='secretName']").fill('Secret2');
+  await page.locator("input[id='secretName']").fill(gcpData.gcpsecretname);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='projectId']").fill('ProjectId1');
+  await page.locator("input[id='projectId']").fill(gcpData.gcpprojectId);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='serviceAccountKey']").fill('ServiceAccount1');
+  await page.locator("input[id='serviceAccountKey']").fill(gcpData.gcpserviceaccountKey);
   await page.waitForTimeout(2000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
@@ -182,15 +202,15 @@ async function clickOnGCPButton(page: Page) {
 async function clickOnAzureButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(3000);
-  await page.getByRole('option', { name: 'Azure' }).click();
+  await page.getByRole('option', { name: azureData.azure }).click();
   await page.waitForTimeout(2000);
-  await page.locator("input[id='secretName']").fill('Secret3');
+  await page.locator("input[id='secretName']").fill(azureData.azuresecretname);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='TenantId']").fill('Tenant1');
+  await page.locator("input[id='TenantId']").fill(azureData.azuretenantId);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='clientID']").fill('ClientId1');
+  await page.locator("input[id='clientID']").fill(azureData.azureclientId);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='clientSecret']").fill('ClientSecret1');
+  await page.locator("input[id='clientSecret']").fill(azureData.azureclientSecret);
   await page.waitForTimeout(2000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
@@ -267,13 +287,13 @@ async function clickOnVersionControlBtn(page: Page) {
 async function clickOnGitHubButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(2000);
-  await page.getByRole('option', { name: 'GitHub' }).click();
+  await page.getByRole('option', { name: githubData.github }).click();
   await page.waitForTimeout(2000);
-  await page.locator("input[id='secretName']").fill('Secret1');
+  await page.locator("input[id='secretName']").fill(githubData.githubsecretname);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='userName']").fill('username1');
+  await page.locator("input[id='userName']").fill(githubData.githubusername);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='accessToken']").fill('acctoken1');
+  await page.locator("input[id='accessToken']").fill(githubData.githubaccessToken);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
@@ -287,13 +307,13 @@ async function clickOnGitHubButton(page: Page) {
 async function clickOnGitLabButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(3000);
-  await page.getByRole('option', { name: 'GitLab' }).click();
+  await page.getByRole('option', { name: gitlabData.gitlab }).click();
   await page.waitForTimeout(2000);
-  await page.locator("input[id='secretName']").fill('Secret4');
+  await page.locator("input[id='secretName']").fill(gitlabData.gitlabsecretname);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='userName']").fill('UserName2');
+  await page.locator("input[id='userName']").fill(gitlabData.gitlabusername);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='accessToken']").fill('AccessToken2');
+  await page.locator("input[id='accessToken']").fill(gitlabData.gitlabaccessToken);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
@@ -307,13 +327,13 @@ async function clickOnGitLabButton(page: Page) {
 async function clickOnBitbucketButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(3000);
-  await page.getByRole('option', { name: 'Bitbucket' }).click();
+  await page.getByRole('option', { name: bitbucketbData.bitbucket }).click();
   await page.waitForTimeout(2000);
-  await page.locator("input[id='secretName']").fill('Secret5');
+  await page.locator("input[id='secretName']").fill(bitbucketbData.bbsecretname);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='userName']").fill('UserName3');
+  await page.locator("input[id='userName']").fill(bitbucketbData.bbusername);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='accessToken']").fill('AccessToken3');
+  await page.locator("input[id='accessToken']").fill(bitbucketbData.bbaccessToken);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
@@ -346,13 +366,13 @@ async function clickOnContainerRegistryBtn(page: Page) {
 async function clickOnGoogleContainerRegistryButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(3000);
-  await page.getByRole('option', { name: 'Google Container Registry' }).click();
+  await page.getByRole('option', { name: googlecontainerRegistryData.googlecontainerregistry }).click();
   await page.waitForTimeout(2000);
-  await page.locator("input[id='secretName']").fill('Secret7');
+  await page.locator("input[id='secretName']").fill(googlecontainerRegistryData.gcrsecretname);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='serviceAccountKey']").fill('ServiceAccountKey1');
+  await page.locator("input[id='serviceAccountKey']").fill(googlecontainerRegistryData.gcrserviceaccountkey);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='url']").fill('https://google.com');
+  await page.locator("input[id='url']").fill(googlecontainerRegistryData.gcrurl);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
@@ -365,15 +385,15 @@ async function clickOnGoogleContainerRegistryButton(page: Page) {
 async function clickOnAmazonECRButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(3000);
-  await page.getByRole('option', { name: 'Amazon ECR' }).click();
+  await page.getByRole('option', { name: amazonECRData.amazonecr }).click();
   await page.waitForTimeout(3000);
-  await page.locator("input[id='secretName']").fill('Secr3');
+  await page.locator("input[id='secretName']").fill(amazonECRData.amazonecrsecretname);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='registryId']").fill('RegistryId1');
+  await page.locator("input[id='registryId']").fill(amazonECRData.amazonecrregistryId);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='accessKeyId']").fill('AccessKeyId1');
+  await page.locator("input[id='accessKeyId']").fill(amazonECRData.amazonecraccesskeyId);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='secretAccessKey']").fill('SecretAccessKey1');
+  await page.locator("input[id='secretAccessKey']").fill(amazonECRData.amazonecrsecretaccesskey);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
@@ -386,15 +406,15 @@ async function clickOnAmazonECRButton(page: Page) {
 async function clickOnDockerHubButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(3000);
-  await page.getByRole('option', { name: 'Docker Hub' }).click();
+  await page.getByRole('option', { name: dockerHubData.dockerhub }).click();
   await page.waitForTimeout(2000);
-  await page.locator("input[id='secretName']").fill('Secret9');
+  await page.locator("input[id='secretName']").fill(dockerHubData.dockerhubsecretname);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='url']").fill('https://google.com');
+  await page.locator("input[id='url']").fill(dockerHubData.dockerhuburl);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='userName']").fill('Username1');
+  await page.locator("input[id='userName']").fill(dockerHubData.dockerhubusername);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='password']").fill('Password1');
+  await page.locator("input[id='password']").fill(dockerHubData.dockerhubpassword);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
@@ -407,15 +427,15 @@ async function clickOnDockerHubButton(page: Page) {
 async function clickOnGithubContainerRegistryButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(3000);
-  await page.getByRole('option', { name: 'GitHub Container Registry' }).click();
+  await page.getByRole('option', { name: githubContainerRegistryData.ghcr }).click();
   await page.waitForTimeout(2000);
-  await page.locator("input[id='secretName']").fill('Secret17');
+  await page.locator("input[id='secretName']").fill(githubContainerRegistryData.ghcrsecretname);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='registry_url']").fill('https://google.com');
+  await page.locator("input[id='registry_url']").fill(githubContainerRegistryData.ghcrregistryurl);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='username']").fill('Username4');
+  await page.locator("input[id='username']").fill(githubContainerRegistryData.ghcrusername);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='password']").fill('Password6');
+  await page.locator("input[id='password']").fill(githubContainerRegistryData.ghcrpassword);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
@@ -447,15 +467,15 @@ async function clickOnCIAndCDBtn(page: Page) {
 async function clickOnArgoCDButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(3000);
-  await page.getByRole('option', { name: 'ArgoCD' }).click();
+  await page.getByRole('option', { name: argoCDData.argocd }).click();
   await page.waitForTimeout(2000);
-  await page.locator("input[id='secretName']").fill('Seet10');
+  await page.locator("input[id='secretName']").fill(argoCDData.acdsecretname);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='endpointURL']").fill('https://www.google.com');
+  await page.locator("input[id='endpointURL']").fill(argoCDData.acdendpointurl);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='userName']").fill('Username4');
+  await page.locator("input[id='userName']").fill(argoCDData.acdusername);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='password']").fill('Password3');
+  await page.locator("input[id='password']").fill(argoCDData.acdpassword);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
@@ -468,15 +488,15 @@ async function clickOnArgoCDButton(page: Page) {
 async function clickOnJenkinsButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(3000);
-  await page.getByRole('option', { name: 'Jenkins' }).click();
+  await page.getByRole('option', { name: jenkinsData.jenkins }).click();
   await page.waitForTimeout(2000);
-  await page.locator("input[id='secretName']").fill('Secret11');
+  await page.locator("input[id='secretName']").fill(jenkinsData.jsecretname);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='endpointURL']").fill('https://www.google.com');
+  await page.locator("input[id='endpointURL']").fill(jenkinsData.jendpointurl);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='userName']").fill('Username5');
+  await page.locator("input[id='userName']").fill(jenkinsData.jusername);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='password']").fill('Password5');
+  await page.locator("input[id='password']").fill(jenkinsData.jpassword);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
@@ -489,15 +509,15 @@ async function clickOnJenkinsButton(page: Page) {
 async function clickOnCircleCIButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(3000);
-  await page.getByRole('option', { name: 'CircleCI' }).click();
+  await page.getByRole('option', { name: circleCIData.circleci }).click();
   await page.waitForTimeout(2000);
-  await page.locator("input[id='secretName']").fill('Secret12');
+  await page.locator("input[id='secretName']").fill(circleCIData.ccisecretname);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='endpointURL']").fill('https://www.google.com');
+  await page.locator("input[id='endpointURL']").fill(circleCIData.cciendpointurl);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='userName']").fill('Username6');
+  await page.locator("input[id='userName']").fill(circleCIData.cciusername);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='password']").fill('Password6');
+  await page.locator("input[id='password']").fill(circleCIData.ccipassword);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
@@ -530,15 +550,15 @@ async function clickOnObservabilityBtn(page: Page) {
 async function clickOnGrafanaButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(3000);
-  await page.getByRole('option', { name: 'Grafana' }).click();
+  await page.getByRole('option', { name: grafanaData.grafana }).click();
   await page.waitForTimeout(2000);
-  await page.locator("input[id='secretName']").fill('Secret13');
+  await page.locator("input[id='secretName']").fill(grafanaData.gsecretname);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='endpointURL']").fill('https://www.google.com');
+  await page.locator("input[id='endpointURL']").fill(grafanaData.gendpointurl);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='userName']").fill('Username7');
+  await page.locator("input[id='userName']").fill(grafanaData.gusername);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='password']").fill('Password7');
+  await page.locator("input[id='password']").fill(grafanaData.gpassword);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
@@ -551,15 +571,15 @@ async function clickOnGrafanaButton(page: Page) {
 async function clickOnLokiButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(3000);
-  await page.getByRole('option', { name: 'Loki' }).click();
+  await page.getByRole('option', { name: lokiData.loki }).click();
   await page.waitForTimeout(2000);
-  await page.locator("input[id='secretName']").fill('Secret14');
+  await page.locator("input[id='secretName']").fill(lokiData.lsecretname);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='endpointURL']").fill('https://www.google.com');
+  await page.locator("input[id='endpointURL']").fill(lokiData.lendpointurl);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='userName']").fill('Username8');
+  await page.locator("input[id='userName']").fill(lokiData.lusername);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='password']").fill('Password7');
+  await page.locator("input[id='password']").fill(lokiData.lpassword);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
@@ -572,15 +592,15 @@ async function clickOnLokiButton(page: Page) {
 async function clickOnMimirButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(3000);
-  await page.getByRole('option', { name: 'Mimir' }).click();
+  await page.getByRole('option', { name: mimirData.mimir }).click();
   await page.waitForTimeout(2000);
-  await page.locator("input[id='secretName']").fill('Secret15');
+  await page.locator("input[id='secretName']").fill(mimirData.msecretname);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='endpointURL']").fill('https://www.google.com');
+  await page.locator("input[id='endpointURL']").fill(mimirData.mendpointurl);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='userName']").fill('Username9');
+  await page.locator("input[id='userName']").fill(mimirData.musername);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='password']").fill('Password8');
+  await page.locator("input[id='password']").fill(mimirData.mpassword);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
@@ -593,15 +613,15 @@ async function clickOnMimirButton(page: Page) {
 async function clickOnTempoButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(3000);
-  await page.getByRole('option', { name: 'Tempo' }).click();
+  await page.getByRole('option', { name: tempoData.tempo }).click();
   await page.waitForTimeout(2000);
-  await page.locator("input[id='secretName']").fill('Secet22');
+  await page.locator("input[id='secretName']").fill(tempoData.tsecretname);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='endpointURL']").fill('https://www.google.com');
+  await page.locator("input[id='endpointURL']").fill(tempoData.tendpointurl);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='userName']").fill('Username10');
+  await page.locator("input[id='userName']").fill(tempoData.tusername);
   await page.waitForTimeout(1000);
-  await page.locator("input[id='password']").fill('Password7');
+  await page.locator("input[id='password']").fill(tempoData.tpassword);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
