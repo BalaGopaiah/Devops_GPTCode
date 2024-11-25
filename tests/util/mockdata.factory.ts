@@ -7,7 +7,9 @@ const defaultDevopsAWSValues: CreationOfAWS = {
     awssecretname: 'Secret1',
     awsaccesskeyId: 'Key1',
     awssecretaccessKey: 'SecretAccess1',
-    awsregion: 'Region1'
+    awsregion: 'Region1',
+    editawssecretaccessKey: 'SecretAcce',
+    editawsregion: 'Regio'
 }
 
 const createAWS = (overwrites: Partial<CreationOfAWS> = {}) => {
@@ -22,6 +24,7 @@ const defaultDevopsGCPValues: CreationOfGCP = {
     gcpsecretname: 'Secret2',
     gcpprojectId: 'ProjectId1',
     gcpserviceaccountKey: 'ServiceAccount1',
+    editgcpserviceaccountKey: 'ServiceAcco',
 }
 
 const createGCP = (overwrites: Partial<CreationOfGCP> = {}) => {
@@ -37,6 +40,8 @@ const defaultDevopsAzureValues: CreationOfAzure = {
     azuretenantId: 'Tenant1',
     azureclientId: 'ClientId1',
     azureclientSecret: 'ClientSecret1',
+    editazureclientId: 'ClietId1',
+    editazureclientSecret: 'ClintSeret1',
 }
 
 const createAzure = (overwrites: Partial<CreationOfAzure> = {}) => {
@@ -51,6 +56,7 @@ const defaultDevopsGithubValues: CreationOfGithub = {
     githubsecretname: 'Secret1',
     githubusername: 'username1',
     githubaccessToken: 'acctoken1',
+    editgithubaccessToken: 'accken1'
 }
 
 const createGithub = (overwrites: Partial<CreationOfGithub> = {}) => {
@@ -65,6 +71,7 @@ const defaultDevopsGitlabValues: CreationOfGilab = {
     gitlabsecretname: 'Secret4', 
     gitlabusername: 'UserName2',
     gitlabaccessToken: 'AccessToken2',
+    editgitlabaccessToken: 'AcessToen2'
 }
 
 const createGitlab = (overwrites: Partial<CreationOfGilab> = {}) => {
@@ -79,6 +86,7 @@ const defaultDevopsBitbucketValues: CreationOfBitbucket = {
     bbsecretname: 'Secret5',
     bbusername: 'UserName3',
     bbaccessToken: 'AccessToken3',
+    editbbaccessToken: 'AccsToen3',
 }
 
 const createBitbucket = (overwrites: Partial<CreationOfBitbucket> = {}) => {
@@ -93,6 +101,7 @@ const defaultDevopsGoogleContainerRegistryValues: CreationOfGoogleContainerRegis
     gcrsecretname: 'Secret7',
     gcrserviceaccountkey: 'ServiceAccountKey1',
     gcrurl: 'https://google.com',
+    editgcrurl: 'https://gmail.com'
 }
 
 const createGoogleContainerRegistry = (overwrites: Partial<CreationOfGoogleContainerRegistry> = {}) => {
@@ -108,6 +117,7 @@ const defaultDevopsAmazonECRValues: CreationOfAmazonECR = {
     amazonecrregistryId: 'RegistryId1',
     amazonecraccesskeyId: 'AccessKeyId1',
     amazonecrsecretaccesskey: 'SecretAccessKey1',
+    editamazonecrsecretaccesskey: 'SeetAessKey1'
 }
 
 const createAmzonECR = (overwrites: Partial<CreationOfAmazonECR> = {}) => {
@@ -123,6 +133,8 @@ const defaultDevopsDockerHubValues: CreationOfDockerHub = {
     dockerhuburl: 'https://google.com',
     dockerhubusername: 'Username1',
     dockerhubpassword: 'Password1',
+    editdockerhubusername: 'Useme1',
+    editdockerhubpassword: 'Paswrd1'
 }
 
 const createDockerHub = (overwrites: Partial<CreationOfDockerHub> = {}) => {
@@ -138,6 +150,8 @@ const defaultDevopsGithubContainerRegistryValues: CreationOfGithubContainerRegis
     ghcrregistryurl: 'https://google.com',
     ghcrusername: 'Username4',
     ghcrpassword: 'Password6',
+    editghcrusername: 'Usrnme4',
+    editghcrpassword: 'Pswrd6'
 }
 
 const createGithubContainerRegistry = (overwrites: Partial<CreationOfGithubContainerRegistry> = {}) => {
@@ -153,6 +167,8 @@ const defaultDevopsArgoCDValues: CreationOfArgoCD = {
     acdendpointurl: 'https://www.google.com',
     acdusername: 'Username4',
     acdpassword: 'Password3',
+    editacdusername: 'Usenae4',
+    editacdpassword: 'Paswrd3',
 }
 
 const createArgoCD = (overwrites: Partial<CreationOfArgoCD> = {}) => {
@@ -168,6 +184,8 @@ const defaultDevopsJenkinsValues: CreationOfJenkins = {
     jendpointurl: 'https://www.google.com',
     jusername: 'Username5',
     jpassword: 'Password5',
+    editjusername: 'Usrnae5',
+    editjpassword: 'Paswod5'
 }
 
 const createJenkins = (overwrites: Partial<CreationOfJenkins> = {}) => {
@@ -183,6 +201,8 @@ const defaultDevopsCircleCIValues: CreationOfCircleCI = {
     cciendpointurl: 'https://www.google.com',
     cciusername: 'Username6',
     ccipassword: 'Password6',
+    editcciusername:  'Usenae6',
+    editccipassword: 'Paswod6'
 }
 
 const createCircleCI = (overwrites: Partial<CreationOfCircleCI> = {}) => {
@@ -198,6 +218,8 @@ const defaultDevopsGrafanaValues: CreationOfGrafana = {
     gendpointurl: 'https://www.google.com',
     gusername: 'Username7',
     gpassword: 'Password7',
+    editgusername: 'Uernae7',
+    editgpassword: 'Psswod7',
 }
 
 const createGrafana = (overwrites: Partial<CreationOfGrafana> = {}) => {
@@ -213,6 +235,8 @@ const defaultDevopsLokiValues: CreationOfLoki = {
     lendpointurl: 'https://www.google.com',
     lusername: 'Username8',
     lpassword: 'Password7',
+    editlusername: 'Usname8',
+    editlpassword: 'Psword7',
 }
 
 const createLoki = (overwrites: Partial<CreationOfLoki> = {}) => {
@@ -228,6 +252,8 @@ const defaultDevopsMimirValues: CreationOfMimir = {
     mendpointurl: 'https://www.google.com',
     musername: 'Username9',
     mpassword: 'Password8',
+    editmusername: 'Useame9',
+    editmpassword: 'Paword8',
 }
 
 const createMimir = (overwrites: Partial<CreationOfMimir> = {}) => {
@@ -243,6 +269,8 @@ const defaultDevopsTempoValues: CreationOfTempo = {
     tendpointurl: 'https://www.google.com',
     tusername: 'Username10',
     tpassword: 'Password7',
+    edittusername: 'Userne10',
+    edittpassword: 'Passwd7',
 }
 
 const createTempo = (overwrites: Partial<CreationOfTempo> = {}) => {

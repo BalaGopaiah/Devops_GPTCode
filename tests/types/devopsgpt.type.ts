@@ -7,6 +7,8 @@ type CreationOfAWS = {
     awsaccesskeyId: string;
     awssecretaccessKey: string;
     awsregion: string;
+    editawssecretaccessKey: string,
+    editawsregion: string;
 }
 
 type CreationOfGCP = {
@@ -14,6 +16,7 @@ type CreationOfGCP = {
     gcpsecretname: string;
     gcpprojectId: string;
     gcpserviceaccountKey: string;
+    editgcpserviceaccountKey: string
 }
 
 type CreationOfAzure = {
@@ -22,6 +25,8 @@ type CreationOfAzure = {
     azuretenantId: string;
     azureclientId: string;
     azureclientSecret: string;
+    editazureclientId: string;
+    editazureclientSecret: string;
 }
 
 type CreationOfGithub = {
@@ -29,6 +34,7 @@ type CreationOfGithub = {
     githubsecretname: string;
     githubusername: string;
     githubaccessToken: string;
+    editgithubaccessToken: string;
 }
 
 type CreationOfGilab = {
@@ -36,6 +42,7 @@ type CreationOfGilab = {
     gitlabsecretname: string;
     gitlabusername: string;
     gitlabaccessToken: string;
+    editgitlabaccessToken: string;
 }
 
 type CreationOfBitbucket = {
@@ -43,6 +50,7 @@ type CreationOfBitbucket = {
     bbsecretname: string;
     bbusername: string;
     bbaccessToken: string;
+    editbbaccessToken: string;
 }
 
 type CreationOfGoogleContainerRegistry = {
@@ -50,6 +58,7 @@ type CreationOfGoogleContainerRegistry = {
     gcrsecretname: string;
     gcrserviceaccountkey: string;
     gcrurl: string;
+    editgcrurl: string;
 }
 
 type CreationOfAmazonECR = {
@@ -58,6 +67,7 @@ type CreationOfAmazonECR = {
     amazonecrregistryId: string;
     amazonecraccesskeyId: string;
     amazonecrsecretaccesskey: string;
+    editamazonecrsecretaccesskey: string;
 }
 
 type CreationOfDockerHub = {
@@ -66,6 +76,8 @@ type CreationOfDockerHub = {
     dockerhuburl: string;
     dockerhubusername: string;
     dockerhubpassword: string;
+    editdockerhubusername: string;
+    editdockerhubpassword: string;
 }
 
 type CreationOfGithubContainerRegistry = {
@@ -74,6 +86,8 @@ type CreationOfGithubContainerRegistry = {
     ghcrregistryurl: string;
     ghcrusername: string;
     ghcrpassword: string;
+    editghcrusername: string;
+    editghcrpassword: string;
 }
 
 type CreationOfArgoCD = {
@@ -82,6 +96,8 @@ type CreationOfArgoCD = {
     acdendpointurl: string;
     acdusername: string;
     acdpassword: string;
+    editacdusername: string;
+    editacdpassword: string;
 }
 
 type CreationOfJenkins = {
@@ -90,6 +106,8 @@ type CreationOfJenkins = {
     jendpointurl: string;
     jusername: string;
     jpassword: string;
+    editjusername: string;
+    editjpassword: string;
 }
 
 type CreationOfCircleCI = {
@@ -98,6 +116,8 @@ type CreationOfCircleCI = {
     cciendpointurl: string;
     cciusername: string;
     ccipassword: string;
+    editcciusername: string;
+    editccipassword: string;
 }
 
 type CreationOfGrafana = {
@@ -106,6 +126,8 @@ type CreationOfGrafana = {
     gendpointurl: string;
     gusername: string;
     gpassword: string;
+    editgusername: string;
+    editgpassword: string;
 }
 type CreationOfLoki = {
     loki: string;
@@ -113,6 +135,8 @@ type CreationOfLoki = {
     lendpointurl: string;
     lusername: string;
     lpassword: string;
+    editlusername: string;
+    editlpassword: string;
 }
 type CreationOfMimir = {
     mimir: string;
@@ -120,6 +144,8 @@ type CreationOfMimir = {
     mendpointurl: string;
     musername: string;
     mpassword: string;
+    editmusername: string;
+    editmpassword: string;
 }
 type CreationOfTempo = {
     tempo: string;
@@ -127,6 +153,8 @@ type CreationOfTempo = {
     tendpointurl: string;
     tusername: string;
     tpassword: string;
+    edittusername: string;
+    edittpassword: string;
 }
 
 export {

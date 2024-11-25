@@ -3,6 +3,7 @@ import { testConfig } from '../../testConfig';
 import test from '../lib/BaseTest';
 import { createAmzonECR, createArgoCD, createAWS, createAzure, createBitbucket, createCircleCI, createDockerHub, createGCP, createGithub, createGithubContainerRegistry, createGitlab, createGoogleContainerRegistry, createGrafana, createJenkins, createLoki, createMimir, createTempo } from '../util/mockdata.factory';
 import { CreationOfAmazonECR, CreationOfArgoCD, CreationOfAWS, CreationOfAzure, CreationOfBitbucket, CreationOfCircleCI, CreationOfDockerHub, CreationOfGCP, CreationOfGilab, CreationOfGithub, CreationOfGithubContainerRegistry, CreationOfGoogleContainerRegistry, CreationOfGrafana, CreationOfJenkins, CreationOfLoki, CreationOfMimir, CreationOfTempo } from '../types/devopsgpt.type';
+import { WebActions } from '../util/webactions';
 
 const date = new Date();
 const day = `${date.getDate()}`.padStart(2, '0');
@@ -174,6 +175,8 @@ async function clickOnAWSButton(page: Page) {
   await page.waitForTimeout(2000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
+
+  await clickOnAWSEditButton(page);
 }
 
 /**
@@ -193,6 +196,8 @@ async function clickOnGCPButton(page: Page) {
   await page.waitForTimeout(2000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
+
+  await clickOnGCPEditButton(page);
 }
 
 /**
@@ -213,6 +218,64 @@ async function clickOnAzureButton(page: Page) {
   await page.locator("input[id='clientSecret']").fill(azureData.azureclientSecret);
   await page.waitForTimeout(2000);
   await page.click("button:text('Add Secret')");
+  await page.waitForTimeout(2000);
+
+  await clickOnAzureEditButton(page);
+}
+
+/**
+ * Function is used to click on edit button for each secret type.
+ * @param page Interface page
+ */
+async function clickOnAWSEditButton(page: Page) {
+  await page.locator('div[class="flex gap-1"] button:nth-child(1)').nth(0).click();
+  await page.waitForTimeout(2000);
+
+  await page.locator("input[id='secretAccessKey']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='secretAccessKey']").fill(awsData.editawssecretaccessKey);
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='region']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='region']").fill(awsData.editawsregion);
+  await page.waitForTimeout(2000);
+  await page.click("button:text('Update Secret')");
+  await page.waitForTimeout(2000);
+}
+
+/**
+ * Function is used to click on edit button for each secret type.
+ * @param page Interface page
+ */
+async function clickOnGCPEditButton(page: Page) {
+  await page.locator('div[class="flex gap-1"] button:nth-child(1)').nth(1).click();
+  await page.waitForTimeout(2000);
+
+  await page.locator("input[id='serviceAccountKey']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='serviceAccountKey']").fill(gcpData.editgcpserviceaccountKey);
+  await page.waitForTimeout(2000);
+  await page.click("button:text('Update Secret')");
+  await page.waitForTimeout(2000);
+}
+
+/**
+ * Function is used to click on edit button for each secret type.
+ * @param page Interface page
+ */
+async function clickOnAzureEditButton(page: Page) {
+  await page.locator('div[class="flex gap-1"] button:nth-child(1)').nth(1).click();
+  await page.waitForTimeout(2000);
+
+  await page.locator("input[id='clientID']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='clientID']").fill(azureData.editazureclientId);
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='clientSecret']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='clientSecret']").fill(azureData.editazureclientSecret);
+  await page.waitForTimeout(2000);
+  await page.click("button:text('Update Secret')");
   await page.waitForTimeout(2000);
 }
 
@@ -298,6 +361,23 @@ async function clickOnGitHubButton(page: Page) {
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
 
+  await clickOnGithubEditButton(page);
+}
+
+/**
+ * Function is used to click on edit button for each secret type.
+ * @param page Interface page
+ */
+async function clickOnGithubEditButton(page: Page) {
+  await page.locator('div[class="flex gap-1"] button:nth-child(1)').nth(0).click();
+  await page.waitForTimeout(2000);
+
+  await page.locator("input[id='accessToken']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='accessToken']").fill(githubData.editgithubaccessToken);
+  await page.waitForTimeout(1000);
+  await page.click("button:text('Update Secret')");
+  await page.waitForTimeout(2000);
 }
 
 /**
@@ -318,6 +398,23 @@ async function clickOnGitLabButton(page: Page) {
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
 
+  await clickOnGitlabEditButton(page);
+}
+
+/**
+ * Function is used to click on edit button for each secret type.
+ * @param page Interface page
+ */
+async function clickOnGitlabEditButton(page: Page) {
+  await page.locator('div[class="flex gap-1"] button:nth-child(1)').nth(1).click();
+  await page.waitForTimeout(2000);
+
+  await page.locator("input[id='accessToken']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='accessToken']").fill(gitlabData.editgitlabaccessToken);
+  await page.waitForTimeout(1000);
+  await page.click("button:text('Update Secret')");
+  await page.waitForTimeout(2000);
 }
 
 /**
@@ -338,6 +435,23 @@ async function clickOnBitbucketButton(page: Page) {
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
 
+  await clickOnBitbucketEditButton(page);
+}
+
+/**
+ * Function is used to click on edit button for each secret type.
+ * @param page Interface page
+ */
+async function clickOnBitbucketEditButton(page: Page) {
+  await page.locator('div[class="flex gap-1"] button:nth-child(1)').nth(2).click();
+  await page.waitForTimeout(2000);
+
+  await page.locator("input[id='accessToken']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='accessToken']").fill(bitbucketbData.editbbaccessToken);
+  await page.waitForTimeout(1000);
+  await page.click("button:text('Update Secret')");
+  await page.waitForTimeout(2000);
 }
 
 /**
@@ -348,7 +462,7 @@ async function clickOnContainerRegistryBtn(page: Page) {
   await page.click('button:text("Container Registry")');
   await page.waitForTimeout(2000);
 
-  //await clickOnGoogleContainerRegistryButton(page);
+  await clickOnGoogleContainerRegistryButton(page);
   await clickOnAmazonECRButton(page);
   await clickOnDockerHubButton(page);
   await clickOnGithubContainerRegistryButton(page);
@@ -376,6 +490,24 @@ async function clickOnGoogleContainerRegistryButton(page: Page) {
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
+
+  await clickOnGoogleContainerRegistryEditButton(page);
+}
+
+/**
+ * Function is used to click on edit button for each secret type.
+ * @param page Interface page
+ */
+async function clickOnGoogleContainerRegistryEditButton(page: Page) {
+  await page.locator('div[class="flex gap-1"] button:nth-child(1)').nth(0).click();
+  await page.waitForTimeout(2000);
+
+  await page.locator("input[id='url']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='url']").fill(googlecontainerRegistryData.editgcrurl);
+  await page.waitForTimeout(1000);
+  await page.click("button:text('Update Secret')");
+  await page.waitForTimeout(2000);
 }
 
 /**
@@ -397,6 +529,24 @@ async function clickOnAmazonECRButton(page: Page) {
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
+
+  await clickOnAmazonECREditButton(page);
+}
+
+/**
+ * Function is used to click on edit button for each secret type.
+ * @param page Interface page
+ */
+async function clickOnAmazonECREditButton(page: Page) {
+  await page.locator('div[class="flex gap-1"] button:nth-child(1)').nth(1).click();
+  await page.waitForTimeout(2000);
+
+  await page.locator("input[id='secretAccessKey']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='secretAccessKey']").fill(amazonECRData.editamazonecrsecretaccesskey);
+  await page.waitForTimeout(1000);
+  await page.click("button:text('Update Secret')");
+  await page.waitForTimeout(2000);
 }
 
 /**
@@ -407,8 +557,12 @@ async function clickOnDockerHubButton(page: Page) {
   await page.click("button:has(span:text('Select secret type'))");
   await page.waitForTimeout(3000);
   await page.getByRole('option', { name: dockerHubData.dockerhub }).click();
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(3000);
+  await page.locator("input[id='secretName']").click();
+  await page.waitForTimeout(1000);
   await page.locator("input[id='secretName']").fill(dockerHubData.dockerhubsecretname);
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='url']").click();
   await page.waitForTimeout(1000);
   await page.locator("input[id='url']").fill(dockerHubData.dockerhuburl);
   await page.waitForTimeout(1000);
@@ -417,6 +571,28 @@ async function clickOnDockerHubButton(page: Page) {
   await page.locator("input[id='password']").fill(dockerHubData.dockerhubpassword);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
+  await page.waitForTimeout(2000);
+
+  await clickOnDockerHubEditButton(page);
+}
+
+/**
+ * Function is used to click on edit button for each secret type.
+ * @param page Interface page
+ */
+async function clickOnDockerHubEditButton(page: Page) {
+  await page.locator('div[class="flex gap-1"] button:nth-child(1)').nth(2).click();
+  await page.waitForTimeout(2000);
+
+  await page.locator("input[id='userName']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='userName']").fill(dockerHubData.editdockerhubusername);
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").fill(dockerHubData.editdockerhubpassword);
+  await page.waitForTimeout(1000);
+  await page.click("button:text('Update Secret')");
   await page.waitForTimeout(2000);
 }
 
@@ -438,6 +614,28 @@ async function clickOnGithubContainerRegistryButton(page: Page) {
   await page.locator("input[id='password']").fill(githubContainerRegistryData.ghcrpassword);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
+  await page.waitForTimeout(2000);
+
+  await clickOnGithubContainerRegistryEditButton(page);
+}
+
+/**
+ * Function is used to click on edit button for each secret type.
+ * @param page Interface page
+ */
+async function clickOnGithubContainerRegistryEditButton(page: Page) {
+  await page.locator('div[class="flex gap-1"] button:nth-child(1)').nth(3).click();
+  await page.waitForTimeout(2000);
+
+  await page.locator("input[id='username']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='username']").fill(githubContainerRegistryData.editghcrusername);
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").fill(githubContainerRegistryData.editghcrpassword);
+  await page.waitForTimeout(1000);
+  await page.click("button:text('Update Secret')");
   await page.waitForTimeout(2000);
 }
 
@@ -479,6 +677,28 @@ async function clickOnArgoCDButton(page: Page) {
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
+
+  await clickOnArgoCDEditButton(page);
+}
+
+/**
+ * Function is used to click on edit button for each secret type.
+ * @param page Interface page
+ */
+async function clickOnArgoCDEditButton(page: Page) {
+  await page.locator('div[class="flex gap-1"] button:nth-child(1)').nth(0).click();
+  await page.waitForTimeout(2000);
+
+  await page.locator("input[id='userName']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='userName']").fill(argoCDData.editacdusername);
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").fill(argoCDData.editacdpassword);
+  await page.waitForTimeout(1000);
+  await page.click("button:text('Update Secret')");
+  await page.waitForTimeout(2000);
 }
 
 /**
@@ -500,6 +720,28 @@ async function clickOnJenkinsButton(page: Page) {
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
+
+  await clickOnJenkinsEditButton(page);
+}
+
+/**
+ * Function is used to click on edit button for each secret type.
+ * @param page Interface page
+ */
+async function clickOnJenkinsEditButton(page: Page) {
+  await page.locator('div[class="flex gap-1"] button:nth-child(1)').nth(1).click();
+  await page.waitForTimeout(2000);
+
+  await page.locator("input[id='userName']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='userName']").fill(jenkinsData.editjusername);
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").fill(jenkinsData.editjpassword);
+  await page.waitForTimeout(1000);
+  await page.click("button:text('Update Secret')");
+  await page.waitForTimeout(2000);
 }
 
 /**
@@ -520,6 +762,28 @@ async function clickOnCircleCIButton(page: Page) {
   await page.locator("input[id='password']").fill(circleCIData.ccipassword);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
+  await page.waitForTimeout(2000);
+
+  await clickOnCircleCIEditButton(page);
+}
+
+/**
+ * Function is used to click on edit button for each secret type.
+ * @param page Interface page
+ */
+async function clickOnCircleCIEditButton(page: Page) {
+  await page.locator('div[class="flex gap-1"] button:nth-child(1)').nth(2).click();
+  await page.waitForTimeout(2000);
+
+  await page.locator("input[id='userName']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='userName']").fill(circleCIData.editcciusername);
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").fill(circleCIData.editccipassword);
+  await page.waitForTimeout(1000);
+  await page.click("button:text('Update Secret')");
   await page.waitForTimeout(2000);
 }
 
@@ -562,6 +826,28 @@ async function clickOnGrafanaButton(page: Page) {
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
+
+  await clickOnGrafanaEditButton(page);
+}
+
+/**
+ * Function is used to click on edit button for each secret type.
+ * @param page Interface page
+ */
+async function clickOnGrafanaEditButton(page: Page) {
+  await page.locator('div[class="flex gap-1"] button:nth-child(1)').nth(0).click();
+  await page.waitForTimeout(2000);
+
+  await page.locator("input[id='userName']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='userName']").fill(grafanaData.editgusername);
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").fill(grafanaData.editgpassword);
+  await page.waitForTimeout(1000);
+  await page.click("button:text('Update Secret')");
+  await page.waitForTimeout(2000);
 }
 
 /**
@@ -582,6 +868,28 @@ async function clickOnLokiButton(page: Page) {
   await page.locator("input[id='password']").fill(lokiData.lpassword);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
+  await page.waitForTimeout(2000);
+
+  await clickOnLokiEditButton(page);
+}
+
+/**
+ * Function is used to click on edit button for each secret type.
+ * @param page Interface page
+ */
+async function clickOnLokiEditButton(page: Page) {
+  await page.locator('div[class="flex gap-1"] button:nth-child(1)').nth(1).click();
+  await page.waitForTimeout(2000);
+
+  await page.locator("input[id='userName']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='userName']").fill(lokiData.editlusername);
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").fill(lokiData.editlpassword);
+  await page.waitForTimeout(1000);
+  await page.click("button:text('Update Secret')");
   await page.waitForTimeout(2000);
 }
 
@@ -604,6 +912,28 @@ async function clickOnMimirButton(page: Page) {
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
   await page.waitForTimeout(2000);
+
+  await clickOnMimirEditButton(page);
+}
+
+/**
+ * Function is used to click on edit button for each secret type.
+ * @param page Interface page
+ */
+async function clickOnMimirEditButton(page: Page) {
+  await page.locator('div[class="flex gap-1"] button:nth-child(1)').nth(2).click();
+  await page.waitForTimeout(2000);
+
+  await page.locator("input[id='userName']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='userName']").fill(mimirData.editmusername);
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").fill(mimirData.editmpassword);
+  await page.waitForTimeout(1000);
+  await page.click("button:text('Update Secret')");
+  await page.waitForTimeout(2000);
 }
 
 /**
@@ -624,5 +954,27 @@ async function clickOnTempoButton(page: Page) {
   await page.locator("input[id='password']").fill(tempoData.tpassword);
   await page.waitForTimeout(1000);
   await page.click("button:text('Add Secret')");
+  await page.waitForTimeout(2000);
+
+  await clickOnTempoEditButton(page);
+}
+
+/**
+ * Function is used to click on edit button for each secret type.
+ * @param page Interface page
+ */
+async function clickOnTempoEditButton(page: Page) {
+  await page.locator('div[class="flex gap-1"] button:nth-child(1)').nth(3).click();
+  await page.waitForTimeout(2000);
+
+  await page.locator("input[id='userName']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='userName']").fill(tempoData.edittusername);
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").clear();
+  await page.waitForTimeout(1000);
+  await page.locator("input[id='password']").fill(tempoData.edittpassword);
+  await page.waitForTimeout(1000);
+  await page.click("button:text('Update Secret')");
   await page.waitForTimeout(2000);
 }

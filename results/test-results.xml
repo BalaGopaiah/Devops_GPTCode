@@ -1,0 +1,62 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="426.155579">
+<testsuite name="testsuites\Testcase1.spec.ts" timestamp="2024-11-25T07:06:17.715Z" hostname="Chromium" tests="1" failures="0" skipped="0" time="424.442" errors="0">
+<testcase name="Navigate and validate the Integrations module for Cloud Providers, Version Control, and Container Registry sub-modules › Navigate and validate the Integrations module for Cloud Providers, Version Control, and Container Registry sub-modules" classname="testsuites\Testcase1.spec.ts" time="424.442">
+<system-out>
+<![CDATA[Current delete button count: 3
+Clicking delete button...
+Current delete button count: 2
+Clicking delete button...
+Current delete button count: 1
+Clicking delete button...
+Current delete button count: 0
+No more delete buttons remaining.
+All delete buttons have been processed.
+Current delete button count: 3
+Clicking delete button...
+Current delete button count: 2
+Clicking delete button...
+Current delete button count: 1
+Clicking delete button...
+Current delete button count: 0
+No more delete buttons remaining.
+All delete buttons have been processed.
+Current delete button count: 4
+Clicking delete button...
+Current delete button count: 3
+Clicking delete button...
+Current delete button count: 2
+Clicking delete button...
+Current delete button count: 1
+Clicking delete button...
+Current delete button count: 0
+No more delete buttons remaining.
+All delete buttons have been processed.
+Current delete button count: 3
+Clicking delete button...
+Current delete button count: 2
+Clicking delete button...
+Current delete button count: 1
+Clicking delete button...
+Current delete button count: 0
+No more delete buttons remaining.
+All delete buttons have been processed.
+Current delete button count: 4
+Clicking delete button...
+Current delete button count: 3
+Clicking delete button...
+Current delete button count: 2
+Clicking delete button...
+Current delete button count: 1
+Clicking delete button...
+Current delete button count: 0
+No more delete buttons remaining.
+All delete buttons have been processed.
+
+[[ATTACHMENT|..\test-results\testsuites-Testcase1-Navig-ec0f5-tainer-Registry-sub-modules-Chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\test-results\testsuites-Testcase1-Navig-ec0f5-tainer-Registry-sub-modules-Chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>
